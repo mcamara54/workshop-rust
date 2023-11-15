@@ -288,6 +288,6 @@ if  !game.game_duration_elapsed() {
 
 ## Axes d'améliorations
 
-Maintenant que le jeu est opériationnel, bien qu'à chier, c'est à vous de l'améliorer en y ajoutant vos touches personnelles telles que des sprites pour les oiseaux, un background, un affichage du score, de l'accuracy, et plein d'autres choses.
+Maintenant que le jeu est opérationnel, bien qu'à chier, c'est à vous de l'améliorer en y ajoutant vos touches personnelles telles que des sprites pour les oiseaux, un background, un affichage du score, de l'accuracy, et plein d'autres choses.
 
 Bisous, cordialement nous!
