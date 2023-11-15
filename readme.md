@@ -53,14 +53,14 @@ sudo apt-get install -y libsdl2-ttf-dev
 
  Ajouter la dépendance SDL2 dans le "**Cargo.toml**":
 
-```
+```toml
 [dependencies]
 sdl2 = "*"
 ```
 
 Dans le fichier "**src/main.rs**", il faut ajouter les différents **imports** nécessaires pour la SDL2:
 
-```
+```rs
 extern  crate sdl2;
 use sdl2::event::Event;
 use sdl2::keyboard::Keycode;
@@ -69,7 +69,7 @@ use core::time::Duration
 
 On peut maintenant **initialiser sa fenêtre**:
 
-```
+```rs
 const WINDOW_WIDTH: u32 = 800;
 const WINDOW_HEIGHT: u32 = 600;
 
@@ -102,14 +102,14 @@ On va maintenant ajouter les éléments nécessaires pour la création de notre 
 ### Structures:
 
  - Piafs
-```
+```rs
 struct Bird {
 	position: Point,
 	alive: bool,
 }
 ```
  - Game
-```
+```rs
 struct Game {
 	canvas: Canvas<Window>,
 	birds: Vec<Bird>,
@@ -122,14 +122,14 @@ struct Game {
 
 ### Implémentation des fonctions nécessaire à la structure Game:
 
-```
+```rs
 impl Game {
 	// ici vont être les fonctions
 }
 ```
 
 La première sera le **constructeur**.
-```
+```rs
 fn  new(canvas:  Canvas<Window>) ->  Game {
 	Game {
 		canvas,
@@ -144,7 +144,7 @@ fn  new(canvas:  Canvas<Window>) ->  Game {
 
 On aura également besoin d'une fonction pour faire **spawner** les "oiseaux".
 
-```
+```rs
 fn  spawn_bird(&mut  self) {
 	let  x  = rand::thread_rng().gen_range(0..WINDOW_WIDTH  as  i32  -  BIRD_SIZE);
 	let  y  = rand::thread_rng().gen_range(0..WINDOW_HEIGHT  as  i32  -  BIRD_SIZE);
@@ -158,7 +158,7 @@ fn  spawn_bird(&mut  self) {
 
 Une fonction **update** pour faire **bouger** les piafs et faire **respawn** ceux décédey.
 
-```
+```rs
 fn  update(&mut  self) {
 	let  mut  rng  = rand::thread_rng();
 	for  bird  in  &mut  self.birds {
@@ -178,7 +178,7 @@ fn  update(&mut  self) {
 
 Une fonction **draw** qui va **afficher** tous les éléments dans la fenêtre.
 
-```
+```rs
 fn  draw(&mut  self) {
 	self.canvas.set_draw_color(Color::RGB(0, 0, 0));
 	self.canvas.clear();
@@ -194,7 +194,7 @@ fn  draw(&mut  self) {
 
 La fonction **handle_click** qui va donc vérifier si les piafs vont **crever ou non**.
 
-```
+```rs
 fn  handle_click(&mut  self, x:  i32, y:  i32) {
 	self.clicks +=  1;
 	for  bird  in  &mut  self.birds {
@@ -212,7 +212,7 @@ fn  handle_click(&mut  self, x:  i32, y:  i32) {
 
 La fonction **game_duration_elapsed** qui vérifie si le **temps de jeu** est **écoulé**.
 
-```
+```rs
 fn  game_duration_elapsed(&self) ->  bool {
 	self.start_time.elapsed().as_secs() >= GAME_DURATION
 }
@@ -220,7 +220,7 @@ fn  game_duration_elapsed(&self) ->  bool {
 
 Pour finir avec Game, il faut la fonction **calculate_precision** qui va permettre d'**afficher au joueur** sa **précision** sur la partie.
 
-```
+```rs
 fn  calculate_precision(&self) ->  f32 {
 	return  self.clicks_in as  f32  *  100.0  / self.clicks as  f32;
 }
@@ -229,13 +229,13 @@ fn  calculate_precision(&self) ->  f32 {
 ### Mise à jour du "Cargo.toml":
 
 Il faut ajouter la dépendance de **rand**. Le fichier devrait donc maintenant ressembler à cela.
-```
+```toml
 [dependencies]
 sdl2 = "*"
 rand = "0.8.5"
 ```
 ### Mise à jour des imports:
-```
+```rs
 use sdl2::event::Event;
 use sdl2::keyboard::Keycode;
 use sdl2::mouse::MouseButton;
@@ -256,13 +256,13 @@ const  GAME_DURATION:  u64  =  30; // Durée du jeu en secondes
 ### Modification en conséquence du main:
 
 On ajoute l'**instance** de Game:
-```
+```rs
 let mut game = Game::new(canvas);
 ```
 
 On ajoute l'évènement **handle_client** dans la **gestion des évènements** de la boucle principale:
 
-```
+```rs
 Event::MouseButtonDown { x, y, mouse_btn, .. } => {
 	if  mouse_btn  ==  MouseButton::Left {
 		game.handle_click(x, y);
@@ -272,7 +272,7 @@ Event::MouseButtonDown { x, y, mouse_btn, .. } => {
 
 On ajoute les **conditions** vérifiant si le **temps et écoulé** ou non et qui agissent en conséquences !
 
-```
+```rs
 if  !game.game_duration_elapsed() {
 	if  game.birds.len() < MAX_BIRDS {
 		game.spawn_bird();
