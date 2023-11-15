@@ -290,4 +290,4 @@ if  !game.game_duration_elapsed() {
 
 Maintenant que le jeu est opériationnel, bien qu'à chier, c'est à vous de l'améliorer en y ajoutant vos touches personnelles telles que des sprites pour les oiseaux, un background, un affichage du score, de l'accuracy, et plein d'autres choses.
 
-Bisous, coordialement nous!
+Bisous, cordialement nous!
